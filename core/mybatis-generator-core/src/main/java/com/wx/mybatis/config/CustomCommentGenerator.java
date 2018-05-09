@@ -1,17 +1,17 @@
 /**
- *    Copyright 2006-2018 the original author or authors.
- *
- *    Licensed under the Apache License, Version 2.0 (the "License");
- *    you may not use this file except in compliance with the License.
- *    You may obtain a copy of the License at
- *
- *       http://www.apache.org/licenses/LICENSE-2.0
- *
- *    Unless required by applicable law or agreed to in writing, software
- *    distributed under the License is distributed on an "AS IS" BASIS,
- *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *    See the License for the specific language governing permissions and
- *    limitations under the License.
+ * Copyright 2006-2018 the original author or authors.
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 /*
  * .............................................
@@ -51,19 +51,18 @@
  */
 package com.wx.mybatis.config;
 
-import org.apache.commons.beanutils.BeanUtils;
-import org.mybatis.generator.api.*;
+
+import org.mybatis.generator.api.GeneratedJavaFile;
+import org.mybatis.generator.api.IntrospectedColumn;
+import org.mybatis.generator.api.IntrospectedTable;
+import org.mybatis.generator.api.ShellRunner;
 import org.mybatis.generator.api.dom.java.*;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.internal.DefaultCommentGenerator;
-import org.mybatis.generator.internal.util.JavaBeansUtil;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executors;
 
-public class CustomCommentGenerator extends DefaultCommentGenerator{
+public class CustomCommentGenerator extends DefaultCommentGenerator {
 
     public void addFieldComment(Field field, IntrospectedTable introspectedTable, IntrospectedColumn introspectedColumn) {
         StringBuffer sb = new StringBuffer();
@@ -80,24 +79,24 @@ public class CustomCommentGenerator extends DefaultCommentGenerator{
         field.addJavaDocLine(" */");
     }
 
-    private void addComment(InnerClass innerClass,IntrospectedTable introspectedTable){
+    private void addComment(InnerClass innerClass, IntrospectedTable introspectedTable) {
         innerClass.addJavaDocLine("/**");
-        if(introspectedTable.getRemarks() != null) {
+        if (introspectedTable.getRemarks() != null) {
             innerClass.addJavaDocLine(" * " + introspectedTable.getRemarks());
         }
-        innerClass.addJavaDocLine(" * 表名 : "+introspectedTable.getFullyQualifiedTable());
+        innerClass.addJavaDocLine(" * 表名 : " + introspectedTable.getFullyQualifiedTable());
         innerClass.addJavaDocLine("* @author wangxin");
         innerClass.addJavaDocLine(" */");
     }
 
     @Override
     public void addModelClassComment(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
-        addComment(topLevelClass,introspectedTable);
+        addComment(topLevelClass, introspectedTable);
     }
 
     public void addClassComment(InnerClass innerClass,
                                 IntrospectedTable introspectedTable) {
-        addComment(innerClass,introspectedTable);
+        addComment(innerClass, introspectedTable);
 
     }
 
@@ -116,7 +115,7 @@ public class CustomCommentGenerator extends DefaultCommentGenerator{
     public static void main(String[] args) {
 
         String path = CustomCommentGenerator.class.getResource("/mybatis-generator-config.xml").getPath();
-        String []p = {"-configfile", path,"-overwrite"};
+        String[] p = {"-configfile", path, "-overwrite"};
         ShellRunner.main(p);
 
     }
@@ -129,7 +128,7 @@ public class CustomCommentGenerator extends DefaultCommentGenerator{
                 CompilationUnit compilationUnit = generatedJavaFile.getCompilationUnit();
                 if (compilationUnit instanceof Interface) {
                     Interface inter = (Interface) generatedJavaFile.getCompilationUnit();
-                    GeneratedJavaFileImpl base = new GeneratedJavaFileImpl(generatedJavaFile, (CompilationUnit) Interface.deepCopy(inter));
+                    GeneratedJavaFileImpl base = new GeneratedJavaFileImpl(generatedJavaFile, inter);
                     String name = generatedJavaFile.getFileName().replace("Mapper", "").replace(".java", "");
                     base.setFileName("BaseMapper.java");
                     String s = base.getCompilationUnit().getFormattedContent().replace(name + "Mapper", "BaseMapper").replace(name + "Criteria", "MC").replace(name, "M");
@@ -140,7 +139,7 @@ public class CustomCommentGenerator extends DefaultCommentGenerator{
                     break;
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
