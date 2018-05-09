@@ -19,6 +19,7 @@ import static org.mybatis.generator.api.dom.OutputUtilities.calculateImports;
 import static org.mybatis.generator.api.dom.OutputUtilities.newLine;
 import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -36,6 +37,10 @@ public class Interface extends InnerInterface implements CompilationUnit {
     private Set<String> staticImports;
 
     private List<String> fileCommentLines;
+
+    private String content;
+
+    private boolean isFirst = true;
 
     public Interface(FullyQualifiedJavaType type) {
         super(type);
@@ -63,8 +68,11 @@ public class Interface extends InnerInterface implements CompilationUnit {
 
     @Override
     public String getFormattedContent() {
-
-        return getFormattedContent(0, this);
+        if(isFirst){
+            content = getFormattedContent(0, this);
+            isFirst= false;
+        }
+        return content;
     }
 
     @Override
@@ -123,6 +131,14 @@ public class Interface extends InnerInterface implements CompilationUnit {
     @Override
     public void addImportedTypes(Set<FullyQualifiedJavaType> importedTypes) {
         this.importedTypes.addAll(importedTypes);
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 
     @Override

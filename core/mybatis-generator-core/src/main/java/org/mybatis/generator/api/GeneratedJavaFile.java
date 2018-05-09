@@ -17,6 +17,8 @@ package org.mybatis.generator.api;
 
 import org.mybatis.generator.api.dom.java.CompilationUnit;
 
+import java.io.*;
+
 /**
  * The Class GeneratedJavaFile.
  *
@@ -53,6 +55,13 @@ public class GeneratedJavaFile extends GeneratedFile {
         this.compilationUnit = compilationUnit;
         this.fileEncoding = fileEncoding;
         this.javaFormatter = javaFormatter;
+    }
+
+    public GeneratedJavaFile(GeneratedJavaFile other,CompilationUnit unit) {
+        super(other.targetProject);
+        this.compilationUnit = unit;
+        this.fileEncoding = other.fileEncoding;
+        this.javaFormatter = other.javaFormatter;
     }
 
     /**
@@ -125,4 +134,6 @@ public class GeneratedJavaFile extends GeneratedFile {
     public String getFileEncoding() {
         return fileEncoding;
     }
+
+
 }

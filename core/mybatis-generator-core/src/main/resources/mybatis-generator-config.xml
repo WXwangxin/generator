@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <!-- 指定数据连接驱动jar地址 -->
+    <classPathEntry location="D:\\wx\\git_project\\generator\\core\\mybatis-generator-core\\src\\main\\resources\\mysql-connector-java-5.1.35-bin.jar"/>
+    <!-- 一个数据库一个context -->
+    <context id="BuildingTables" targetRuntime="Mybatis3">
+
+        <!-- defaultModelType="hierarchical" -->
+        <property name="javaFileEncoding" value="UTF-8"/>
+        <property name="suppressTypeWarnings" value="true"/>
+
+        <!-- 序列化 -->
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+        <!--<plugin type="org.mybatis.generator.plugins.CaseInsensitiveLikePlugin"/>
+        <plugin type="org.mybatis.generator.plugins.RowBoundsPlugin"/>
+        <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
+        <plugin type="org.mybatis.generator.plugins.CachePlugin"/>-->
+
+        <plugin type="org.mybatis.generator.plugins.RenameExampleClassPlugin">
+            <property name="searchString" value="Example$"/>
+            <property name="replaceString" value="Criteria"/>
+        </plugin>
+
+        <commentGenerator type="com.wx.mybatis.config.CustomCommentGenerator">
+            <property name="javaFileEncoding" value="UTF-8"/>
+            <property name="suppressAllComments" value="false"/>
+            <property name="suppressDate" value="true"/>
+        </commentGenerator>
+        <!-- 注释 -->
+
+        <!-- jdbc连接 -->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://127.0.0.1:3306/proxies?useUnicode=true&amp;characterEncoding=utf-8"
+                        userId="root" password="123"/>
+        <!-- 类型转换 -->
+        <javaTypeResolver>
+            <!-- 是否使用bigDecimal， false可自动转化以下类型（Long, Integer, Short, etc.） -->
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <!-- 生成实体类地址 -->
+        <javaModelGenerator targetPackage="com.wx.start.entity"
+                            targetProject="D:/java">
+            <!-- enableSubPackages:是否让schema作为包的后缀 -->
+            <property name="enableSubPackages" value="true"/>
+            <!-- 从数据库返回的值被清理前后的空格。设置是否在getter方法中，对String类型字段调用trim()方法 -->
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <!-- 生成mapxml文件 -->
+        <sqlMapGenerator targetPackage="com.wx.start.mapper" targetProject="D:/java">
+            <!-- enableSubPackages:是否让schema作为包的后缀 -->
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+        <!-- 生成mapxml对应mapper接口 -->
+        <javaClientGenerator targetPackage="com.wx.start.dao"
+                             targetProject="D:/java" type="XMLMAPPER">
+            <!-- enableSubPackages:是否让schema作为包的后缀 -->
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+        <!-- tableName:用于自动生成代码的数据库表；domainObjectName:对应于数据库表的javaBean类名 -->
+        <table tableName="%">
+            <domainObjectRenamingRule searchString="^T" replaceString="" />
+        </table>
+
+    </context>
+</generatorConfiguration>  

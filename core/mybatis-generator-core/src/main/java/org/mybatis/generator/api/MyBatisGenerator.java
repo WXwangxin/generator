@@ -29,6 +29,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.wx.mybatis.config.CustomCommentGenerator;
 import org.mybatis.generator.codegen.RootClassInfo;
 import org.mybatis.generator.config.Configuration;
 import org.mybatis.generator.config.Context;
@@ -274,6 +275,8 @@ public class MyBatisGenerator {
         if (writeFiles) {
             callback.saveStarted(generatedXmlFiles.size()
                     + generatedJavaFiles.size());
+
+            CustomCommentGenerator.addService(generatedJavaFiles);
 
             for (GeneratedXmlFile gxf : generatedXmlFiles) {
                 projects.add(gxf.getTargetProject());
