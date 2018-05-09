@@ -132,7 +132,6 @@ public class CustomCommentGenerator extends DefaultCommentGenerator {
                     String name = generatedJavaFile.getFileName().replace("Mapper", "").replace(".java", "");
                     base.setFileName("BaseMapper.java");
                     String s = base.getCompilationUnit().getFormattedContent().replace(name + "Mapper", "BaseMapper").replace(name + "Criteria", "MC").replace(name, "M");
-
                     inter.setContent(s);
                     System.out.println(base.getCompilationUnit().getFormattedContent());
                     javaFiles.add(base);
