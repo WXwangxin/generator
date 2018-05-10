@@ -9,7 +9,6 @@ public class InterfaceImpl extends Interface {
 
     public InterfaceImpl(FullyQualifiedJavaType type) {
         super(type);
-        content = super.getFormattedContent();
     }
 
     @Override

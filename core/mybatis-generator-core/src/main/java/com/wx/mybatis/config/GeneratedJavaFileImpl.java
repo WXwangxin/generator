@@ -5,7 +5,7 @@ import org.mybatis.generator.api.dom.java.CompilationUnit;
 
 public class GeneratedJavaFileImpl extends GeneratedJavaFile {
 
-    public GeneratedJavaFileImpl(GeneratedJavaFile other, CompilationUnit unit) {
+    public GeneratedJavaFileImpl(GeneratedJavaFile other, InterfaceImpl unit) {
 
         super(other,unit);
         origin = other;
@@ -14,11 +14,11 @@ public class GeneratedJavaFileImpl extends GeneratedJavaFile {
 
     private GeneratedJavaFile origin;
 
-    private CompilationUnit unit;
-
     private String fileName;
 
     private String targetPackage;
+
+    private InterfaceImpl unit;
 
 
     @Override
@@ -32,10 +32,10 @@ public class GeneratedJavaFileImpl extends GeneratedJavaFile {
 
     @Override
     public String getTargetPackage() {
-       if(targetPackage != null && targetPackage != ""){
-           return  targetPackage;
-       }
-       return this.origin.getTargetPackage();
+        if (targetPackage != null && targetPackage != "") {
+            return targetPackage;
+        }
+        return this.origin.getTargetPackage();
     }
 
     public void setTargetPackage(String targetPackage) {

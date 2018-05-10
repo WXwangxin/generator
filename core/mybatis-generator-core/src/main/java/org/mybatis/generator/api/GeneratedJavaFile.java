@@ -57,9 +57,9 @@ public class GeneratedJavaFile extends GeneratedFile {
         this.javaFormatter = javaFormatter;
     }
 
-    public GeneratedJavaFile(GeneratedJavaFile other,CompilationUnit unit) {
+    public GeneratedJavaFile(GeneratedJavaFile other,CompilationUnit compilationUnit) {
         super(other.targetProject);
-        this.compilationUnit = unit;
+        this.compilationUnit = compilationUnit;
         this.fileEncoding = other.fileEncoding;
         this.javaFormatter = other.javaFormatter;
     }

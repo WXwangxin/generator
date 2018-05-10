@@ -1,132 +1,20 @@
-/**
- * Copyright 2006-2018 the original author or authors.
- * <p>
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * <p>
- * http://www.apache.org/licenses/LICENSE-2.0
- * <p>
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-/*
- * .............................................
- *
- *                  _ooOoo_
- *                 o8888888o
- *                 88" . "88
- *                 (| -_- |)
- *                  O\ = /O
- *              ____/`---*\____
- *               . * \\| |// `.
- *             / \\||| : |||// \
- *           / _||||| -:- |||||- \
- *             | | \\\ - /// | |
- *            | \_| **\---/** | |
- *           \  .-\__ `-` ___/-. /
- *            ___`. .* /--.--\ `. . __
- *        ."" *< `.___\_<|>_/___.* >*"".
- *      | | : `- \`.;`\ _ /`;.`/ - ` : | |
- *         \ \ `-. \_ __\ /__ _/ .-` / /
- *======`-.____`-.___\_____/___.-`____.-*======
- *
- * .............................................
- *              佛祖保佑 永无BUG
- *
- * 佛曰:
- * 写字楼里写字间，写字间里程序员；
- * 程序人员写程序，又拿程序换酒钱。
- * 酒醒只在网上坐，酒醉还来网下眠；
- * 酒醉酒醒日复日，网上网下年复年。
- * 但愿老死电脑间，不愿鞠躬老板前；
- * 奔驰宝马贵者趣，公交自行程序员。
- * 别人笑我忒疯癫，我笑自己命太贱；
- * 不见满街漂亮妹，哪个归得程序员？
- *
- * @author wangxin
- */
 package com.wx.mybatis.config;
 
-
 import org.mybatis.generator.api.GeneratedJavaFile;
-import org.mybatis.generator.api.IntrospectedColumn;
-import org.mybatis.generator.api.IntrospectedTable;
-import org.mybatis.generator.api.ShellRunner;
-import org.mybatis.generator.api.dom.java.*;
-import org.mybatis.generator.api.dom.xml.XmlElement;
-import org.mybatis.generator.internal.DefaultCommentGenerator;
-import sun.awt.image.OffScreenImage;
+import org.mybatis.generator.api.dom.java.CompilationUnit;
+import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
+import org.mybatis.generator.api.dom.java.Interface;
+import org.mybatis.generator.api.dom.java.TopLevelClass;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Set;
 
-public class CustomCommentGenerator extends DefaultCommentGenerator {
+public class OfferServiceLayer {
 
-    public void addFieldComment(Field field, IntrospectedTable introspectedTable, IntrospectedColumn introspectedColumn) {
-        StringBuffer sb = new StringBuffer();
-        field.addJavaDocLine("/**");
-        if (introspectedColumn.getRemarks() != null) {
-            field.addJavaDocLine(" * " + introspectedColumn.getRemarks());
-        }
+    public static final String offset = "    ";
 
-        sb.append(" * 表字段 : ");
-        sb.append(introspectedTable.getFullyQualifiedTable());
-        sb.append('.');
-        sb.append(introspectedColumn.getActualColumnName());
-        field.addJavaDocLine(sb.toString());
-        field.addJavaDocLine(" */");
-    }
-
-    private void addComment(InnerClass innerClass, IntrospectedTable introspectedTable) {
-        innerClass.addJavaDocLine("/**");
-        if (introspectedTable.getRemarks() != null) {
-            innerClass.addJavaDocLine(" * " + introspectedTable.getRemarks());
-        }
-        innerClass.addJavaDocLine(" * 表名 : " + introspectedTable.getFullyQualifiedTable());
-        innerClass.addJavaDocLine("* @author wangxin");
-        innerClass.addJavaDocLine(" */");
-    }
-
-    @Override
-    public void addModelClassComment(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
-        addComment(topLevelClass, introspectedTable);
-    }
-
-    public void addClassComment(InnerClass innerClass,
-                                IntrospectedTable introspectedTable) {
-        addComment(innerClass, introspectedTable);
-
-    }
-
-    public void addGetterComment(Method method, IntrospectedTable introspectedTable, IntrospectedColumn introspectedColumn) {
-    }
-
-    public void addSetterComment(Method method, IntrospectedTable introspectedTable, IntrospectedColumn introspectedColumn) {
-    }
-
-    public void addGeneralMethodComment(Method method, IntrospectedTable introspectedTable) {
-    }
-
-    public void addComment(XmlElement xmlElement) {
-    }
-
-/*    public static void main(String[] args) {
-
-        String path = CustomCommentGenerator.class.getResource("/mybatis-generator-config.xml").getPath();
-        String[] p = {"-configfile", path, "-overwrite"};
-        ShellRunner.main(p);
-
-    }*/
-
-    /*public static final String offset = "    ";
-
-    public static GeneratedJavaFile findModel(List<GeneratedJavaFile> javaFiles,String javaName) {
+    public static GeneratedJavaFile findModel(List<GeneratedJavaFile> javaFiles, String javaName) {
         for (int i = 0; i < javaFiles.size(); i++) {
             GeneratedJavaFile generatedJavaFile = javaFiles.get(i);
             CompilationUnit compilationUnit = generatedJavaFile.getCompilationUnit();
@@ -135,7 +23,7 @@ public class CustomCommentGenerator extends DefaultCommentGenerator {
                 String name = generatedJavaFile.getFileName();
                 name = name.replace(".java","");
                 if(name.equals(javaName)){
-                   return generatedJavaFile;
+                    return generatedJavaFile;
                 }
             }
         }
@@ -188,7 +76,7 @@ public class CustomCommentGenerator extends DefaultCommentGenerator {
                         +"\r\nimport org.springframework.transaction.annotation.Transactional;"
                         +"\r\nimport org.springframework.util.Assert;"
                         +"\r\n\r\nimport java.util.List;")
-            .replace("{","{\r\n\r\n    @Autowired\r\n    private BaseMapper<ID,M,MC> baseMapper;");
+                .replace("{","{\r\n\r\n    @Autowired\r\n    private BaseMapper<ID,M,MC> baseMapper;");
         //拆分具体方法
         String methodsStr = content.substring(content.indexOf("baseMapper;")+11,content.indexOf("}"));
         methodsStr = methodsStr.replace("\r\n","").replace("    ",""); //取得方法
@@ -303,8 +191,8 @@ public class CustomCommentGenerator extends DefaultCommentGenerator {
 
                     String className = name+"Mapper extends BaseMapper<"+idType+","+name+","+name+"Criteria>";
                     content = content.replace(name + "Mapper", className)
-                        .replace("import org.apache.ibatis.annotations.Param;\r\n","")
-                        .replace("import java.util.List;\r\n","");
+                            .replace("import org.apache.ibatis.annotations.Param;\r\n","")
+                            .replace("import java.util.List;\r\n","");
                     Interface inter = (Interface) generatedJavaFile.getCompilationUnit();
                     inter.setContent(content);
 
@@ -323,5 +211,6 @@ public class CustomCommentGenerator extends DefaultCommentGenerator {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }*/
+    }
 }
+
