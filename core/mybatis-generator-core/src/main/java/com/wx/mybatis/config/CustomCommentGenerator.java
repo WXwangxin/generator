@@ -112,7 +112,6 @@ public class CustomCommentGenerator extends DefaultCommentGenerator {
     public void addComment(XmlElement xmlElement) {
     }
 
-/*
     public static void main(String[] args) {
 
         String path = CustomCommentGenerator.class.getResource("/mybatis-generator-config.xml").getPath();
@@ -120,7 +119,6 @@ public class CustomCommentGenerator extends DefaultCommentGenerator {
         ShellRunner.main(p);
 
     }
-*/
 
     /*public static final String offset = "    ";
 

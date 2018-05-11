@@ -272,8 +272,8 @@ public class MyBatisGenerator {
             callback.saveStarted(generatedXmlFiles.size()
                     + generatedJavaFiles.size());
 
-            boolean isEnableInterface = Boolean.valueOf(System.getProperty("enableInterface","false"));
-            if(isEnableInterface) {
+            boolean isEnableService = Boolean.valueOf(System.getProperty("enableService","false"));
+            if(isEnableService) {
                 OfferServiceLayer.addService(generatedJavaFiles);
             }
 
