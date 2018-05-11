@@ -36,11 +36,11 @@
         <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
         <plugin type="org.mybatis.generator.plugins.CachePlugin"/>-->
 
-        <plugin type="org.mybatis.generator.plugins.RenameExampleClassPlugin">
+      <!--  <plugin type="org.mybatis.generator.plugins.RenameExampleClassPlugin">
             <property name="searchString" value="Example$"/>
             <property name="replaceString" value="Criteria"/>
         </plugin>
-
+-->
         <commentGenerator type="com.wx.mybatis.config.CustomCommentGenerator">
             <property name="javaFileEncoding" value="UTF-8"/>
             <property name="suppressAllComments" value="false"/>
@@ -81,7 +81,8 @@
         </javaClientGenerator>
 
         <!-- tableName:用于自动生成代码的数据库表；domainObjectName:对应于数据库表的javaBean类名 -->
-        <table tableName="%">
+        <!--enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"-->
+        <table tableName="%"  >
             <domainObjectRenamingRule searchString="^T" replaceString="" />
         </table>
 

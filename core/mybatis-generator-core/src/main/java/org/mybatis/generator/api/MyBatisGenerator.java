@@ -272,7 +272,10 @@ public class MyBatisGenerator {
             callback.saveStarted(generatedXmlFiles.size()
                     + generatedJavaFiles.size());
 
-            OfferServiceLayer.addService(generatedJavaFiles);
+            boolean isEnableInterface = Boolean.valueOf(System.getProperty("enableInterface","false"));
+            if(isEnableInterface) {
+                OfferServiceLayer.addService(generatedJavaFiles);
+            }
 
             for (GeneratedXmlFile gxf : generatedXmlFiles) {
                 projects.add(gxf.getTargetProject());

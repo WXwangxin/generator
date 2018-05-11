@@ -54,6 +54,7 @@ package com.wx.mybatis.config;
 
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
+import org.mybatis.generator.api.ShellRunner;
 import org.mybatis.generator.api.dom.java.Field;
 import org.mybatis.generator.api.dom.java.InnerClass;
 import org.mybatis.generator.api.dom.java.Method;
@@ -84,7 +85,7 @@ public class CustomCommentGenerator extends DefaultCommentGenerator {
             innerClass.addJavaDocLine(" * " + introspectedTable.getRemarks());
         }
         innerClass.addJavaDocLine(" * 表名 : " + introspectedTable.getFullyQualifiedTable());
-        innerClass.addJavaDocLine("* @author wangxin");
+        innerClass.addJavaDocLine(" * @author wangxin");
         innerClass.addJavaDocLine(" */");
     }
 
@@ -111,13 +112,15 @@ public class CustomCommentGenerator extends DefaultCommentGenerator {
     public void addComment(XmlElement xmlElement) {
     }
 
-/*    public static void main(String[] args) {
+/*
+    public static void main(String[] args) {
 
         String path = CustomCommentGenerator.class.getResource("/mybatis-generator-config.xml").getPath();
         String[] p = {"-configfile", path, "-overwrite"};
         ShellRunner.main(p);
 
-    }*/
+    }
+*/
 
     /*public static final String offset = "    ";
 
