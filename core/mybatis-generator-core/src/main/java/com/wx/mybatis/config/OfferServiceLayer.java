@@ -194,7 +194,12 @@ public class OfferServiceLayer {
                     GeneratedJavaFile modelJavaFile = findModel(javaFiles, name);
                     String modelPackage = modelJavaFile.getTargetPackage();
                     TopLevelClass modelUnit = (TopLevelClass) modelJavaFile.getCompilationUnit();
-                    String idType = modelUnit.getFields().get(0).getType().getShortName(); //取第一个属性为主键
+                    String idType = "";
+                   if(modelUnit.getSuperClass()!=null && modelUnit.getSuperClass().getShortName().equals(name+"Key")){
+                       idType = modelUnit.getSuperClass().getShortName();//兼容多主键情况
+                   }else {
+                       idType = modelUnit.getFields().get(0).getType().getShortName(); //取第一个属性为主键
+                   }
                     if (isFirst) {
                         InterfaceImpl inter = new InterfaceImpl(compilationUnit.getType());
                         base = new GeneratedJavaFileImpl(generatedJavaFile, inter);
