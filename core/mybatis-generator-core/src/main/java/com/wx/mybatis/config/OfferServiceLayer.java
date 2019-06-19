@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2018 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -43,6 +43,7 @@ public class OfferServiceLayer {
             + " */\r\n";
 
     private static final String exampleAlias = System.getProperty("exampleAlias","Example");
+    private static final boolean enableInterface = Boolean.parseBoolean(System.getProperty("enableInterface","false"));
 
 
     public static GeneratedJavaFile findModel(List<GeneratedJavaFile> javaFiles, String javaName) {
@@ -94,7 +95,14 @@ public class OfferServiceLayer {
         String packagePrefix = modelPackage.substring(0, modelPackage.lastIndexOf("."));
         String servicePackageName = packagePrefix + ".service"; //service层目录
         serviceBase.setTargetPackage(servicePackageName);
-        String content = baseServiceContent.replace("public interface", "@Service\r\n@Transactional\r\npublic abstract class BaseServiceImpl<ID, M, MC> implements");
+        String content = "";
+        if(enableInterface) {
+            serviceBase.setFileName("BaseServiceImpl.java");
+            content = baseServiceContent.replace("public interface", "@Service\r\n@Transactional\r\npublic abstract class BaseServiceImpl<ID, M, MC> implements");
+        }else{
+            serviceBase.setFileName("BaseService.java");
+            content = baseServiceContent.replace("public interface BaseService<ID, M, MC>", "@Service\r\n@Transactional\r\npublic abstract class BaseService<ID, M, MC>");
+        }
         //更改package
         String[] strings = content.split(";");
         content = content.replace(strings[0], "package " + servicePackageName);
@@ -158,15 +166,25 @@ public class OfferServiceLayer {
         CompilationUnit compilationUnit = generatedJavaFile.getCompilationUnit();
         InterfaceImpl serviceInter = new InterfaceImpl(compilationUnit.getType());
         GeneratedJavaFileImpl service = new GeneratedJavaFileImpl(generatedJavaFile, serviceInter);
-        service.setFileName(modelName + "ServiceImpl.java");
+
         String packagePrefix = modelPackage.substring(0, modelPackage.lastIndexOf("."));
         String servicePackageName = packagePrefix + ".service"; //service层目录
         service.setTargetPackage(servicePackageName);
+        String content = "";
+        if(enableInterface){
+            service.setFileName(modelName + "ServiceImpl.java");
+            content = baseMapperContent
+                    .replace("interface", "class")
+                    .replace("public class " + modelName + "Mapper extends BaseMapper<" + idType + ", " + modelName + ", " + modelName + ""+exampleAlias+">",
+                            "@Service\r\n@Transactional(rollbackFor = Exception.class)\r\npublic class " + modelName + "ServiceImpl extends BaseServiceImpl<" + idType + ", " + modelName + ", " + modelName + ""+exampleAlias+"> implements " + modelName + "Service");
+        }else{
+            service.setFileName(modelName + "Service.java");
+            content = baseMapperContent
+                    .replace("interface", "class")
+                    .replace("public class " + modelName + "Mapper extends BaseMapper<" + idType + ", " + modelName + ", " + modelName + ""+exampleAlias+">",
+                            "@Service\r\n@Transactional(rollbackFor = Exception.class)\r\npublic class " + modelName + "Service extends BaseService<" + idType + ", " + modelName + ", " + modelName + ""+exampleAlias+">");
+        }
 
-        String content = baseMapperContent
-                .replace("interface", "class")
-                .replace("public class " + modelName + "Mapper extends BaseMapper<" + idType + ", " + modelName + ", " + modelName + ""+exampleAlias+">",
-                        "@Service\r\n@Transactional(rollbackFor = Exception.class)\r\npublic class " + modelName + "ServiceImpl extends BaseServiceImpl<" + idType + ", " + modelName + ", " + modelName + ""+exampleAlias+"> implements " + modelName + "Service");
         //更改package
         String[] strings = content.split(";");
         content = content.replace(strings[0] + ";", "package " + servicePackageName + ";"
@@ -213,12 +231,17 @@ public class OfferServiceLayer {
                         inter.setContent(s);
                         System.out.println(base.getCompilationUnit().getFormattedContent());
                         isFirst = false;
+
                         GeneratedJavaFileImpl serviceBase = getBaseServiceInter(generatedJavaFile, s, modelPackage);
+
 
                         GeneratedJavaFileImpl serviceBaseClass = getBaseServiceClass(generatedJavaFile, serviceBase.getCompilationUnit().getFormattedContent(), modelPackage);
                         extendsFiles.add(serviceBaseClass);
-                        extendsFiles.add(serviceBase);
+
                         extendsFiles.add(base);
+                        if(enableInterface) {
+                            extendsFiles.add(serviceBase);
+                        }
                     }
 
 
@@ -235,7 +258,10 @@ public class OfferServiceLayer {
                     GeneratedJavaFileImpl service = getServiceInter(generatedJavaFile, content, modelPackage, name, idType);
                     GeneratedJavaFileImpl serviceClass = getServiceClass(generatedJavaFile, content, modelPackage, name, idType);
                     extendsFiles.add(serviceClass);
-                    extendsFiles.add(service);
+                    if(enableInterface) {
+                        extendsFiles.add(service);
+                    }
+
                 }
             }
 
